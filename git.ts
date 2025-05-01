@@ -12,6 +12,16 @@ export async function isGitRepo(): Promise<boolean> {
   return (stdout.trim() === "true");
 }
 
+export async function isGitTracked(filePath: string): Promise<boolean> {
+  const { stdout } = await shell.run("git",
+    ['status', '--porcelain', '--', filePath]);
+  // status line for untracked files look like:
+  //  ?? file-name.ext
+  const [flag, fileName] = stdout.trim().split(' ');
+  console.log("isGitTracked:", {filePath, fileName, flag})
+  return (flag !== "??");
+}
+
 export async function hasUncommittedChanges(filePath: string): Promise<boolean> {
   const { stdout } = await shell.run("git",
     ['status', '--porcelain', '--', filePath]);

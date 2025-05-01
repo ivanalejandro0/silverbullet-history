@@ -2,7 +2,7 @@ import { editor, shell } from "@silverbulletmd/silverbullet/syscalls";
 import { FileMeta } from "@silverbulletmd/silverbullet/types.ts";
 import { parse_full_path } from "./parse_path.ts";
 import { getPanelContents } from "./panel.ts";
-import { isGitRepo, getFileContents, getNewestVersion } from "./git.ts";
+import { isGitRepo, getFileContents, getNewestVersion, isGitTracked } from "./git.ts";
 
 /**
   * Checks on an interval if we're still on the history page.
@@ -23,16 +23,23 @@ function checkForNavigation() {
 }
 
 export async function showPanel() {
-  if (!isGitRepo()) {
-    editor.alert("History not available, not in a git repo")
+  if (!await isGitRepo()) {
+    editor.flashNotification("History: not available. Not in a git repo.", "error")
     return;
   }
 
-  checkForNavigation()
   const page_name = await editor.getCurrentPage();
   const file_path = `${page_name}.md`;
+
+  if (!await isGitTracked(file_path)) {
+    editor.flashNotification("History: not available for this file. Not tracked on git.", "error")
+    return;
+  }
+
   const version = await getNewestVersion(file_path);
   const full_path = `@History/${page_name}/${version}`;
+
+  checkForNavigation()
   await editor.navigate(full_path);
 
   await updatePanel(page_name, version)
