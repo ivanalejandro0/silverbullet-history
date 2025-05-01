@@ -1,25 +1,28 @@
-export function parse_full_path(full_path: string) {
-  // const full_path = "@History/page name.md"
-  // const full_path = "@History/page name/a1b1c1d.md"
-  // TODO: support pages with '/' in their name
-  let [_, page_name, id] = full_path.split('/')
-
-
-  if (!id) {
-    // Slverbullet will add '.md' to all pages
-    // but if there's an ID then we built the path so there
-    // won't be an id on the page name
-    if (page_name.slice(-3) === ".md") {
-      // remove '.md' extension
-      page_name = page_name.slice(0, -3);
-    }
-    return { page_name, version: undefined }
+/**
+ * Parse full page path in the form that this plugin uses and return the page
+ * name and the version for the given path.
+ *
+ * Example pages:
+ * "@History/page name/a1b1c1d.md"
+ * "@History/page name/sub page/a1b1c1d.md"
+ * "@History/page name/sub page/extra page/a1b1c1d.md"
+ */
+export function parse_full_path(full_path: string): {page_name: string, version: string} {
+  let path_array = full_path.split('/');
+  if (path_array.length < 3) {
+    // path at least has 3 elements:
+    // - @History prefix
+    // - page name
+    // - version id
+    throw new Error("Error parsing path, malformed");
   }
+  path_array.shift(); // remove "@History/" prefix
+  let version = path_array.pop()!;
+  const page_name = path_array.join('/');
 
-  let version = id;
-  if (id.slice(-3) === ".md") {
+  if (version.slice(-3) === ".md") {
     // remove '.md' extension
-    version = id.slice(0, -3);
+    version = version.slice(0, -3);
   }
   return { page_name, version }
 }

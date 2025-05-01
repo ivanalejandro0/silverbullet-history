@@ -9,13 +9,6 @@ Deno.test("path with id", () => {
   assertEquals(result, expected);
 });
 
-Deno.test("path with no id", () => {
-  const path = "@History/page name.md";
-  const result = parse_full_path(path)
-  const expected = {page_name: "page name", version: undefined};
-  assertEquals(result, expected);
-});
-
 Deno.test("path with id, only strip final .md extension", () => {
   const path = "@History/page name.md/asdf.md";
   const result = parse_full_path(path)
@@ -23,9 +16,9 @@ Deno.test("path with id, only strip final .md extension", () => {
   assertEquals(result, expected);
 });
 
-Deno.test("path with no id, only strip ext once", () => {
-  const path = "@History/page name.md.md";
+Deno.test("path with / and version", () => {
+  const path = "@History/page name/child page/asdf.md";
   const result = parse_full_path(path)
-  const expected = {page_name: "page name.md", version: undefined};
+  const expected = {page_name: "page name/child page", version: "asdf"};
   assertEquals(result, expected);
 });
