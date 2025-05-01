@@ -10,6 +10,9 @@ html {
   --editor-wiki-link-page-color: var(--link-color);
   --item-bg: var(--editor-wiki-link-page-background-color);
   --item-fg: var(--editor-wiki-link-page-color);
+
+  --action-button-color: #292929;
+  --action-button-hover-color: #0772be;
 }
 
 html[data-theme=light] {
@@ -22,6 +25,9 @@ html[data-theme=dark] {
   --editor-wiki-link-page-color: var(--link-color);
   --item-bg: var(--editor-wiki-link-page-background-color);
   --item-fg: var(--editor-wiki-link-page-color);
+
+  --action-button-color: #adadad;
+  --action-button-hover-color: #37a1ed;
 }
 
 .header {
@@ -34,6 +40,11 @@ html[data-theme=dark] {
   & #close-history {
     display: contents;
     cursor: pointer;
+    color: var(--action-button-color);
+
+    &:hover {
+      color: var(--action-button-hover-color);
+    }
   }
 }
 
