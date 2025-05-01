@@ -22,6 +22,9 @@ function checkForNavigation() {
   const interval_id = setInterval(handler, 1000);
 }
 
+// TODO: handle 'toggle dark theme', sideba closes and history page stays open
+// BUG: on history back, the selected commit doesn't change to the right version
+
 export async function showPanel() {
   if (!await isGitRepo()) {
     editor.flashNotification("History: not available. Not in a git repo.", "error")
@@ -49,7 +52,11 @@ async function updatePanel(page_name: string, version: string) {
   // TODO: handle case where there's already a panel and I'm already in a
   // vestion view
   const { html, js } = await getPanelContents(page_name, version)
-  const mode = "none"; // flexbox stuff
+
+  const mode = 0.7;
+  // the sidebar will have an inline style of `flex: ${mode} 0 auto`
+  // mode will determine the value of `flex-grow` for the sidebar
+
   // see see https://github.com/silverbulletmd/silverbullet/blob/d7e8ab1ea50d24f68175960c6581f70244340251/web/editor_ui.tsx#L351
   await editor.showPanel("lhs", mode, html, `
 ${js}

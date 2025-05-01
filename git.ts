@@ -2,7 +2,7 @@ import { shell } from "@silverbulletmd/silverbullet/syscalls";
 
 type Commit = {
   hash: string,
-  timestamp: string,
+  timestamp: number,
   message: string,
 }
 
@@ -18,7 +18,6 @@ export async function isGitTracked(filePath: string): Promise<boolean> {
   // status line for untracked files look like:
   //  ?? file-name.ext
   const [flag, fileName] = stdout.trim().split(' ');
-  console.log("isGitTracked:", {filePath, fileName, flag})
   return (flag !== "??");
 }
 
@@ -40,14 +39,9 @@ export async function getHistory(filePath: string): Promise<Commit[]> {
     const [hash, timestamp, ...messageParts] = line.split(' ');
     const message = messageParts.join(' ');
 
-    let date = "";
-    try {
-      date = new Date(Number(timestamp) * 1000).toISOString();
-    } catch(e) {}
-
     commits.push({
       hash,
-      timestamp: date,
+      timestamp,
       message,
     });
   }
