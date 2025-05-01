@@ -11,6 +11,10 @@ functions:
       name: "History: view file history"
   selectVersion:
     path: history.ts:selectVersion
+  closeHistory:
+    path: history.ts:closeHistory
+    command:
+      name: "History: close"
 
   readFile:
     path: history.ts:readFile

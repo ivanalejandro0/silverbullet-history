@@ -1,7 +1,9 @@
 const versionList = document.getElementById("version-list");
+const closeVersionList = document.getElementById("close-history");
 
 function init() {
   versionList.addEventListener("click", onVersionClicked);
+  closeVersionList.addEventListener("click", onCloseHistory);
 }
 
 function onVersionClicked(event) {
@@ -18,4 +20,8 @@ function onVersionClicked(event) {
   } catch (e) {
     console.error(e);
   }
+}
+
+function onCloseHistory(event) {
+  syscall("system.invokeFunction", "history.closeHistory");
 }

@@ -64,6 +64,13 @@ ${js}
 `);
 }
 
+export async function closeHistory() {
+  const current_page = await editor.getCurrentPage();
+  const { page_name } = parse_full_path(current_page)
+  await editor.navigate(page_name);
+  await editor.hidePanel("lhs");
+}
+
 export async function selectVersion(hash: string) {
   const current_page = await editor.getCurrentPage();
   const { page_name } = parse_full_path(current_page)

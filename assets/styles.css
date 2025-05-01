@@ -24,6 +24,19 @@ html[data-theme=dark] {
   --item-fg: var(--editor-wiki-link-page-color);
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem;
+
+  & h2 { margin: 0; }
+  & #close-history {
+    display: contents;
+    cursor: pointer;
+  }
+}
+
 ul#version-list {
   list-style: none;
   padding: 0;
