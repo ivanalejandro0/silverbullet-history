@@ -1,7 +1,8 @@
 {
   "tasks": {
-    "build": "silverbullet plug:compile -c deno.jsonc history.plug.yaml",
-    "watch": "silverbullet plug:compile -c deno.jsonc history.plug.yaml -w"
+    "build": "silverbullet plug:compile --config deno.jsonc --dist ./dist/ ./history.plug.yaml",
+    "dev": "silverbullet plug:compile --config deno.jsonc --dist ./dist/ --debug ./history.plug.yaml",
+    "watch": "silverbullet plug:compile --config deno.jsonc --dist ./dist/ --debug --watch ./history.plug.yaml",
   },
   "lint": {
     "rules": {
