@@ -1,4 +1,4 @@
-const filePath = "qwer.md";
+const filePath = "index.md";
 const command = new Deno.Command("git", {
   cwd: "../../space/",
   args: ['status', '--porcelain', '--', filePath]
@@ -20,11 +20,11 @@ console.log(output);
 console.log(output === "");
 console.log({output});
 
-let st = "";
+let st = "", flag = "", fileName = "";
 if (!output) {
   st = "ok"
 } else {
-  const [flag, name] = output.split(' ');
+  [flag, fileName] = output.split(' ');
   switch (flag) {
     case "??":
       st = "not tracked"
@@ -40,4 +40,4 @@ if (!output) {
   }
 }
 
-console.log({st})
+console.log({st, flag, fileName})
