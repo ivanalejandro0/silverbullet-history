@@ -5,6 +5,10 @@ assets:
   - "assets/**/*.*"
 
 functions:
+  toggleHistory:
+    path: history.ts:toggleHistory
+    command:
+      name: "History: open/close"
   showPanel:
     path: history.ts:showPanel
     command:

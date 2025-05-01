@@ -4,6 +4,17 @@ import { parse_full_path } from "./parse_path.ts";
 import { getPanelContents } from "./panel.ts";
 import { isGitRepo, getFileContents, getNewestVersion, isGitTracked } from "./git.ts";
 
+export async function toggleHistory(): boolean {
+  const page_name: string = await editor.getCurrentPage();
+  const historyOpen = page_name.startsWith("@History");
+
+  if (historyOpen) {
+    closeHistory();
+  } else {
+    showPanel();
+  }
+}
+
 /**
   * Checks on an interval if we're still on the history page.
   * If that's not the case then the sidebar is closed.
@@ -32,6 +43,12 @@ export async function showPanel() {
   }
 
   const page_name = await editor.getCurrentPage();
+
+  if (page_name.startsWith("@History")) {
+    // history already open, do nothing
+    return;
+  }
+
   const file_path = `${page_name}.md`;
 
   if (!await isGitTracked(file_path)) {
