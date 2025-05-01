@@ -1,0 +1,29 @@
+name: history
+requiredPermissions:
+  - shell
+assets:
+  - "assets/**/*.*"
+
+functions:
+  showPanel:
+    path: history.ts:showPanel
+    command:
+      name: "History: view file history"
+  selectVersion:
+    path: history.ts:selectVersion
+
+  readFile:
+    path: history.ts:readFile
+    pageNamespace:
+      pattern: "^@History"
+      operation: readFile
+  writeFile:
+    path: history.ts:writeFile
+    pageNamespace:
+      pattern: "^@History"
+      operation: writeFile
+  getFileMeta:
+    path: history.ts:getFileMeta
+    pageNamespace:
+      pattern: "^@History"
+      operation: getFileMeta
