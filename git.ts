@@ -7,9 +7,13 @@ type Commit = {
 }
 
 export async function isGitRepo(): Promise<boolean> {
-  const { stdout } = await shell.run("git",
-    ["rev-parse", "--is-inside-work-tree"]);
-  return (stdout.trim() === "true");
+  try {
+    const { stdout } = await shell.run("git",
+      ["rev-parse", "--is-inside-work-tree"]);
+    return (stdout.trim() === "true");
+  } catch (e) {
+    return false;
+  }
 }
 
 export async function isGitTracked(filePath: string): Promise<boolean> {

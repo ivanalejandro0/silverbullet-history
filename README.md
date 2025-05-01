@@ -4,7 +4,7 @@ version history for pages. This plugin works by getting data from `git` repo,
 so if your space doesn't use `git` the plugin won't work for you.
 
 ## Installation
-The url for the plug is: 
+The url for the plug is:
 
 ```
 github:ivanalejandro0/silverbullet-history-git/dist/history.plug.js

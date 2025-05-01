@@ -1,5 +1,5 @@
 const command = new Deno.Command("git", {
-  cwd: "../space/",
+  cwd: "../../empty_space/",
   args: ["rev-parse", "--is-inside-work-tree"]
 });
 
