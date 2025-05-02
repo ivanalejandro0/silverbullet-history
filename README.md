@@ -3,11 +3,11 @@ A History plugin for [SilverBullet](https://silverbullet.md/). It provides a
 version history for pages. This plugin works by getting data from `git` repo,
 so if your space doesn't use `git` the plugin won't work for you.
 
-I'm using this personally but it's pretty new so there may be bugs.
+Even though I tested this on SilverBullet v0.10.4 and v2, it's pretty new so there may be bugs.
 
 The plugin should be safe to use since I purposely didn't add any action or
-code that could change the pages, you may find problems here and there but
-hopefully your data will be ok.
+code that could change the pages, you may find problems here but hopefully
+nothing destructive.
 
 ## Screenshots
 
@@ -29,49 +29,29 @@ Check out the SilverBullet docs on how to install it. Note that it changes on v2
 
 ## Add action button
 
-Tested on SilverBullet v2.
-
 You can add an action button to show a page history like so:
 
-```lua
-{
-  icon = "list",
-  description = "History toggle",
-  command = "History: toggle open/close",
-}
-```
-
-Here's an example on how my CONFIG file looks like:
+On your CONFIG file (SilverBullet v2):
 
 ```lua
 config.set {
   actionButtons = {
     {
-      icon = "home",
-      command = "Navigate: Home",
-      description = "Go to the index page"
-    },
-    {
       icon = "list",
       description = "History toggle",
       command = "History: toggle open/close",
-    },
-    {
-      icon = "book",
-      command = "Navigate: Page Picker",
-      description = "Open page"
-    },
-    {
-      icon = "terminal",
-      command = "Open Command Palette",
-      description = "Run command"
     }
-  },
-
-  plugs = {
-    -- your plugs here
   }
 }
+```
+
+On your SETTINGS file (SilverBullet v0.10.4):
+
+```yaml
+actionButtons:
+- icon: list
+  command: "{[History: toggle open/close]}"
+  description: "History toggle"
 ```
 
 # Caveats
@@ -85,7 +65,7 @@ config.set {
 To build this plug, make sure you have [SilverBullet installed with
 Deno](https://silverbullet.md/Install/Deno).
 
-Above link broken on v2, snippet:
+Link above broken on v2, snippet:
 
 ```
 deno install --force --name silverbullet --allow-all https://get.silverbullet.md --global
