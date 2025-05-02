@@ -3,10 +3,11 @@ A History plugin for [SilverBullet](https://silverbullet.md/). It provides a
 version history for pages. This plugin works by getting data from `git` repo,
 so if your space doesn't use `git` the plugin won't work for you.
 
-Even though I tested this on SilverBullet v0.10.4 and v2, it's pretty new so there may be bugs.
+I tested this on SilverBullet v0.10.4 and v2, but it's pretty new so you may
+find bugs.
 
 The plugin should be safe to use since I purposely didn't add any action or
-code that could change the pages, you may find problems here but hopefully
+code that could change your pages, you may find problems here but hopefully
 nothing destructive.
 
 ## Screenshots
