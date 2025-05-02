@@ -28,6 +28,16 @@ ghr:ivanalejandro0/silverbullet-history
 
 Check out the SilverBullet docs on how to install it. Note that it changes on v2.
 
+## Usage
+
+The plug provides the following commands:
+
+- {[History: view file history]}: opens the versions sidebar and shows the latest version of the current page
+- {[History: close]}: closes the versions sidebar and goes to the page we are looking the history of
+- {[History: toggle open/close]}: opens the history if closed, closes the history if open
+
+You may want to set [Shortcuts](https://silverbullet.md/Shortcuts) for them.
+
 ## Add action button
 
 You can add an action button to show a page history like so:
