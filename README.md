@@ -65,7 +65,7 @@ actionButtons:
   description: "History toggle"
 ```
 
-# Caveats
+## Caveats
 * this will only work if your space is in a git repo and only with the files you have versioned.
 * the history won't work if you're offline, I haven't tested nor investigated much that use case.
 * I haven't yet tested how this behaves with page renames. I don't think it'll show a good history on that use case.
