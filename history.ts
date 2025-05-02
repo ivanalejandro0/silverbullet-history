@@ -1,13 +1,13 @@
-import { editor, shell } from "@silverbulletmd/silverbullet/syscalls";
-import { FileMeta } from "@silverbulletmd/silverbullet/types.ts";
+import { editor } from "@silverbulletmd/silverbullet/syscalls";
 import { parse_full_path } from "./parse_path.ts";
 import { getPanelContents } from "./panel.ts";
 import { isGitRepo, getFileContents, getNewestVersion, isGitTracked } from "./git.ts";
+import { getHistory, hasUncommittedChanges } from "./git.ts";
 
 // NOTE: on the yaml configuration file for the plugin there's also the "@History" string
 const PAGE_PREFIX = "@History"
 
-export async function historyToggle(): boolean {
+export async function historyToggle(): Promise<void> {
   const page_name: string = await editor.getCurrentPage();
   const historyOpen = page_name.startsWith(PAGE_PREFIX);
 
@@ -70,15 +70,17 @@ export async function historyShow() {
 }
 
 async function updatePanel(page_name: string, version: string) {
-  // TODO: handle case where there's already a panel and I'm already in a
-  // vestion view
-  const { html, js } = await getPanelContents(page_name, version)
+  const file_path = page_name + ".md";
+  const history = await getHistory(file_path);
+  const newerChanges = await hasUncommittedChanges(file_path);
+
+  const { html, js } = await getPanelContents(history, version, newerChanges)
 
   const mode = 0.7;
-  // the sidebar will have an inline style of `flex: ${mode} 0 auto`
+  // the sidebar will have an inline style affected by ${mode}
   // mode will determine the value of `flex-grow` for the sidebar
+  // see https://github.com/silverbulletmd/silverbullet/blob/d7e8ab1ea50d24f68175960c6581f70244340251/web/editor_ui.tsx#L351
 
-  // see see https://github.com/silverbulletmd/silverbullet/blob/d7e8ab1ea50d24f68175960c6581f70244340251/web/editor_ui.tsx#L351
   await editor.showPanel("lhs", mode, html, `
 ${js}
 ; init();
@@ -106,7 +108,7 @@ async function getVersionContents(page_name: string, version: string) {
   return contents
 }
 
-async function getData(full_path: string) {
+export async function getPageContents(full_path: string) {
   let { page_name, version } = parse_full_path(full_path)
 
   if (!version) {
@@ -118,39 +120,4 @@ async function getData(full_path: string) {
   const file_contents = await getVersionContents(page_name, version)
 
   return file_contents;
-}
-
-export async function readFile(
-  name: string,
-): Promise<{ data: Uint8Array; meta: FileMeta }> {
-  const text = await getData(name)
-
-  return {
-    data: new TextEncoder().encode(text),
-    meta: {
-      name,
-      contentType: "text/markdown",
-      size: text.length,
-      created: 0,
-      lastModified: 0,
-      perm: "ro",
-    },
-  };
-}
-
-export function writeFile(name: string): FileMeta {
-  // noop. files should be read-only, so I'm not doing any actual file writing.
-  // BUG: for some reason the pages are not read only, I need to investigate
-  return getFileMeta(name);
-}
-
-export function getFileMeta(name: string): FileMeta {
-  return {
-    name,
-    contentType: "text/markdown",
-    size: -1,
-    created: 0,
-    lastModified: 0,
-    perm: "ro",
-  };
 }

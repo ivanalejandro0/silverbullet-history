@@ -1,17 +1,18 @@
 import { asset } from "@silverbulletmd/silverbullet/syscalls";
-import { getHistory, hasUncommittedChanges } from "./git.ts";
 const PLUG_NAME = "history";
 
-// TODO: add file not in git yet, not in index, 0 versions committed
+type Commit = {
+  hash: string,
+  timestamp: number,
+  message: string,
+}
+
 export async function getPanelContents(
-  page_name: string,
-  selected_version: string
+  history: Commit[],
+  selected_version: string,
+  hasUncommittedChanges: boolean,
 ):
 Promise<{html: string, js: string}> {
-  const file_path = page_name + ".md";
-  const history = await getHistory(file_path);
-  const newerChanges = await hasUncommittedChanges(file_path);
-
   const css = await asset.readAsset(PLUG_NAME, "assets/styles.css");
 
   // icons from https://lucide.dev/icons
@@ -22,7 +23,9 @@ Promise<{html: string, js: string}> {
 
   let html = "";
 
+  // maybe load silverbullet styles?
   // <link rel="stylesheet" href="/.client/main.css" />
+
   html += `
 <style>
 ${css}
@@ -35,7 +38,7 @@ ${css}
   </div>
   `
 
-  if (newerChanges) {
+  if (hasUncommittedChanges) {
     html += `
       <div class="flexHCenter warning">
       ${iconCircleAlert}

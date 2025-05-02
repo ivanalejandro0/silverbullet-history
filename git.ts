@@ -6,6 +6,9 @@ type Commit = {
   message: string,
 }
 
+/**
+ * Return whether the current directory is part of a git repository or not.
+ */
 export async function isGitRepo(): Promise<boolean> {
   try {
     const { stdout } = await shell.run("git",
@@ -16,6 +19,9 @@ export async function isGitRepo(): Promise<boolean> {
   }
 }
 
+/**
+ * Return whether the given file is being tracked by git or not.
+ */
 export async function isGitTracked(filePath: string): Promise<boolean> {
   const { stdout } = await shell.run("git",
     ['status', '--porcelain', '--', filePath]);
@@ -25,6 +31,9 @@ export async function isGitTracked(filePath: string): Promise<boolean> {
   return (flag !== "??");
 }
 
+/**
+ * Return whether the given file has uncommitted changes or not.
+ */
 export async function hasUncommittedChanges(filePath: string): Promise<boolean> {
   const { stdout } = await shell.run("git",
     ['status', '--porcelain', '--', filePath]);
@@ -32,6 +41,9 @@ export async function hasUncommittedChanges(filePath: string): Promise<boolean> 
   return (statusLine !== "");
 }
 
+/**
+ * Return the git history for the given file.
+ */
 export async function getHistory(filePath: string): Promise<Commit[]> {
   const { stdout } = await shell.run("git",
     ['log', '--format=%h %ct %s', '--', filePath])
@@ -53,6 +65,9 @@ export async function getHistory(filePath: string): Promise<Commit[]> {
   return commits;
 }
 
+/**
+ * Return the commit hash for the latest version of the given file.
+ */
 export async function getNewestVersion(filePath: string): Promise<string> {
   const { stdout } = await shell.run("git",
     ['log', '-1', '--format=%h', '--', filePath])
@@ -61,6 +76,9 @@ export async function getNewestVersion(filePath: string): Promise<string> {
   return hash;
 }
 
+/**
+ * Return the contents of the given file withi the commit with the given hash.
+ */
 export async function getFileContents(filePath: string, hash: string): Promise<string> {
   const { stdout } = await shell.run("git", ['show', `${hash}:${filePath}`])
   return stdout;

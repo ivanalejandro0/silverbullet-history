@@ -21,17 +21,17 @@ functions:
     path: history.ts:selectVersion
 
   readFile:
-    path: history.ts:readFile
+    path: operations.ts:readFile
     pageNamespace:
       pattern: "^@History"
       operation: readFile
   writeFile:
-    path: history.ts:writeFile
+    path: operations.ts:writeFile
     pageNamespace:
       pattern: "^@History"
       operation: writeFile
   getFileMeta:
-    path: history.ts:getFileMeta
+    path: operations.ts:getFileMeta
     pageNamespace:
       pattern: "^@History"
       operation: getFileMeta
