@@ -22,7 +22,7 @@ nothing destructive.
 The url for the plug is:
 
 ```
-github:ivanalejandro0/silverbullet-history-git/dist/history.plug.js
+ghr:ivanalejandro0/silverbullet-history
 ```
 
 Check out the SilverBullet docs on how to install it. Note that it changes on v2.
