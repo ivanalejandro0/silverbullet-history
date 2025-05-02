@@ -23,5 +23,5 @@ function onVersionClicked(event) {
 }
 
 function onCloseHistory(event) {
-  syscall("system.invokeFunction", "history.closeHistory");
+  syscall("system.invokeFunction", "history.historyClose");
 }

@@ -5,20 +5,20 @@ assets:
   - "assets/**/*.*"
 
 functions:
-  toggleHistory:
-    path: history.ts:toggleHistory
-    command:
-      name: "History: open/close"
-  showPanel:
-    path: history.ts:showPanel
+  historyShow:
+    path: history.ts:historyShow
     command:
       name: "History: view file history"
-  selectVersion:
-    path: history.ts:selectVersion
-  closeHistory:
-    path: history.ts:closeHistory
+  historyClose:
+    path: history.ts:historyClose
     command:
       name: "History: close"
+  historyToggle:
+    path: history.ts:historyToggle
+    command:
+      name: "History: toggle open/close"
+  selectVersion:
+    path: history.ts:selectVersion
 
   readFile:
     path: history.ts:readFile

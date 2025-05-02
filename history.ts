@@ -7,14 +7,14 @@ import { isGitRepo, getFileContents, getNewestVersion, isGitTracked } from "./gi
 // NOTE: on the yaml configuration file for the plugin there's also the "@History" string
 const PAGE_PREFIX = "@History"
 
-export async function toggleHistory(): boolean {
+export async function historyToggle(): boolean {
   const page_name: string = await editor.getCurrentPage();
   const historyOpen = page_name.startsWith(PAGE_PREFIX);
 
   if (historyOpen) {
-    closeHistory();
+    historyClose();
   } else {
-    showPanel();
+    historyShow();
   }
 }
 
@@ -40,7 +40,7 @@ function checkForNavigation() {
 // TODO: handle offline mode
 // BUG: on history back, the selected commit doesn't change to the right version
 
-export async function showPanel() {
+export async function historyShow() {
   if (!await isGitRepo()) {
     editor.flashNotification("History: not available. Not in a git repo.", "error")
     return;
@@ -85,7 +85,7 @@ ${js}
 `);
 }
 
-export async function closeHistory() {
+export async function historyClose() {
   const current_page = await editor.getCurrentPage();
   const { page_name } = parse_full_path(current_page)
   await editor.navigate(page_name);
