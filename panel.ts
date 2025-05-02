@@ -2,45 +2,6 @@ import { asset } from "@silverbulletmd/silverbullet/syscalls";
 import { getHistory, hasUncommittedChanges } from "./git.ts";
 const PLUG_NAME = "history";
 
-// https://lucide.dev/icons/circle-x
-const iconCircleX = `
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x">
-<circle cx="12" cy="12" r="10"/>
-<path d="m15 9-6 6"/>
-<path d="m9 9 6 6"/>
-</svg>
-`;
-
-// https://lucide.dev/icons/circle-alert
-const iconCircleAlert = `
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert-icon lucide-circle-alert">
-<circle cx="12" cy="12" r="10"/>
-<line x1="12" x2="12" y1="8" y2="12"/>
-<line x1="12" x2="12.01" y1="16" y2="16"/>
-</svg>
-`;
-
-// https://lucide.dev/icons/calendar-clock
-const iconCalendarClock = `
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock-icon lucide-calendar-clock">
-<path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/>
-<path d="M16 2v4"/>
-<path d="M8 2v4"/>
-<path d="M3 10h5"/>
-<path d="M17.5 17.5 16 16.3V14"/>
-<circle cx="16" cy="16" r="6"/>
-</svg>
-`;
-
-// https://lucide.dev/icons/git-commit-horizontal
-const iconGitCommitHorizontal = `
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-commit-horizontal-icon lucide-git-commit-horizontal">
-<circle cx="12" cy="12" r="3"/>
-<line x1="3" x2="9" y1="12" y2="12"/>
-<line x1="15" x2="21" y1="12" y2="12"/>
-</svg>
-`;
-
 // TODO: add file not in git yet, not in index, 0 versions committed
 export async function getPanelContents(
   page_name: string,
@@ -53,9 +14,15 @@ Promise<{html: string, js: string}> {
 
   const css = await asset.readAsset(PLUG_NAME, "assets/styles.css");
 
+  // icons from https://lucide.dev/icons
+  const iconCircleX = await asset.readAsset(PLUG_NAME, "assets/icon-circle-x.svg");;
+  const iconCircleAlert = await asset.readAsset(PLUG_NAME, "assets/icon-circle-alert.svg");;
+  const iconCalendarClock = await asset.readAsset(PLUG_NAME, "assets/icon-calendar-clock.svg");;
+  const iconGitCommitHorizontal = await asset.readAsset(PLUG_NAME, "assets/icon-git-commit-horizontal.svg");;
+
   let html = "";
 
-// <link rel="stylesheet" href="/.client/main.css" />
+  // <link rel="stylesheet" href="/.client/main.css" />
   html += `
 <style>
 ${css}

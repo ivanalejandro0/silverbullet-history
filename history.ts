@@ -34,6 +34,7 @@ function checkForNavigation() {
 }
 
 // TODO: handle 'toggle dark theme', sideba closes and history page stays open
+// TODO: handle offline mode
 // BUG: on history back, the selected commit doesn't change to the right version
 
 export async function showPanel() {
