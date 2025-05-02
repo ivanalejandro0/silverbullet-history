@@ -6,6 +6,8 @@
  * "@History/page name/a1b1c1d.md"
  * "@History/page name/sub page/a1b1c1d.md"
  * "@History/page name/sub page/extra page/a1b1c1d.md"
+ *
+ * Note: @History is defined as PAGE_PREFIX on the codebase.
  */
 export function parse_full_path(full_path: string): {page_name: string, version: string} {
   let path_array = full_path.split('/');

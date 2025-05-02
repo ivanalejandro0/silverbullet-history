@@ -4,9 +4,12 @@ import { parse_full_path } from "./parse_path.ts";
 import { getPanelContents } from "./panel.ts";
 import { isGitRepo, getFileContents, getNewestVersion, isGitTracked } from "./git.ts";
 
+// NOTE: on the yaml configuration file for the plugin there's also the "@History" string
+const PAGE_PREFIX = "@History"
+
 export async function toggleHistory(): boolean {
   const page_name: string = await editor.getCurrentPage();
-  const historyOpen = page_name.startsWith("@History");
+  const historyOpen = page_name.startsWith(PAGE_PREFIX);
 
   if (historyOpen) {
     closeHistory();
@@ -22,7 +25,7 @@ export async function toggleHistory(): boolean {
 function checkForNavigation() {
   async function handler() {
     const page_name = await editor.getCurrentPage();
-    if (!page_name.startsWith("@History")) {
+    if (!page_name.startsWith(PAGE_PREFIX)) {
       editor.hidePanel("lhs");
       clearInterval(interval_id);
     }
@@ -45,7 +48,7 @@ export async function showPanel() {
 
   const page_name = await editor.getCurrentPage();
 
-  if (page_name.startsWith("@History")) {
+  if (page_name.startsWith(PAGE_PREFIX)) {
     // history already open, do nothing
     return;
   }
@@ -58,7 +61,7 @@ export async function showPanel() {
   }
 
   const version = await getNewestVersion(file_path);
-  const full_path = `@History/${page_name}/${version}`;
+  const full_path = `${PAGE_PREFIX}/${page_name}/${version}`;
 
   checkForNavigation()
   await editor.navigate(full_path);
@@ -92,7 +95,7 @@ export async function closeHistory() {
 export async function selectVersion(hash: string) {
   const current_page = await editor.getCurrentPage();
   const { page_name } = parse_full_path(current_page)
-  const full_path = `@History/${page_name}/${hash}`;
+  const full_path = `${PAGE_PREFIX}/${page_name}/${hash}`;
   await editor.navigate(full_path);
   await updatePanel(page_name, hash)
 }
